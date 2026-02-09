@@ -1,0 +1,83 @@
+[
+  {
+    "id": "racket-finder",
+    "theme": {
+      "bg": "#003d79",
+      "accent": "#c6e801",
+      "text": "#ffffff",
+      "muted": "rgba(255,255,255,.86)"
+    },
+    "content": {
+      "titleLines": [
+        "Vybereme ti",
+        "<span class=\"zp-accent\">raketu</span> na míru."
+      ],
+      "leadLines": [
+        "⏱️ Za 2 minuty",
+        "zdarma • bez registrace."
+      ]
+    },
+    "cta": {
+      "label": "Spustit kvíz",
+      "suffix": "→",
+      "href": "https://www.zijpadel.cz/racket-finder",
+      "target": "_top",
+      "aria": "Spustit kvíz výběru rakety",
+      "utm": {
+        "source": "home",
+        "medium": "banner",
+        "campaign": "racket_finder",
+        "content": "community"
+      }
+    },
+    "image": {
+      "src": "https://www.zijpadel.cz/user/documents/upload/zijpadel-banner-padel-dvojice-hraci-radost-vitezstvi.jpg",
+      "alt": "Muž a žena hrající padel se radují a dávají si high-five na kurtu.",
+      "focus": {
+        "desktop": { "x": "60%", "y": "40%" },
+        "mobile": { "x": "60%", "y": "40%" }
+      }
+    }
+  },
+  {
+    "id": "babolat-2026",
+    "theme": {
+      "bg": "#03396f",
+      "accent": "#c6e801",
+      "text": "#ffffff",
+      "muted": "rgba(255,255,255,.86)"
+    },
+    "content": {
+      "titleLines": [
+        "Nová kolekce",
+        "<span class=\"zp-accent\">Babolat</span> 2026"
+      ],
+      "leadLines": [
+        "Lehké • rychlé • přesné",
+        "Vyber si svou.",
+        "Odemkni tvůj Babolat mode!"
+      ]
+    },
+    "cta": {
+      "label": "Zobrazit kolekci",
+      "suffix": "→",
+      "href": "https://www.zijpadel.cz/rakety-na-padel:babolat/?dd=2",
+      "target": "_top",
+      "aria": "Zobrazit kolekci Babolat",
+      "utm": {
+        "source": "home",
+        "medium": "banner",
+        "campaign": "babolat_2026",
+        "content": "collection"
+      }
+    },
+    "image": {
+      "src": "https://www.zijpadel.cz/user/documents/upload/bannery/zijpadel-babolat-kolekce-2026-zijpadel-v2.jpg",
+      "alt": "Nová kolekce Babolat – banner Žij padel.",
+      "focus": {
+        "desktop": { "x": "40%", "y": "50%" },
+        "mobile": { "x": "50%", "y": "50%" }
+      }
+    }
+  }
+]
