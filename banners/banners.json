@@ -8,8 +8,8 @@
             "muted": "rgba(255,255,255,.86)"
         },
         "layout": {
-            "leftWidth": "36%",
-            "rightWidth": "64%",
+            "leftWidth": "42%",
+            "rightWidth": "58%",
             "leftPaddingDesktop": "140px 42px 38px 72px",
             "leftPaddingMobile": "20px 20px 12px",
             "gradientDesktopStop": "30%",
