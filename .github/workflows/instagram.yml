@@ -1,0 +1,42 @@
+name: Update Instagram Feed
+
+on:
+  schedule:
+    - cron: "0 * * * *"  # každou hodinu
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch Instagram Data
+        run: |
+          curl -s "https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${{ secrets.IG_TOKEN }}&limit=20" > raw.json
+
+          node <<'EOF'
+          const fs = require("fs");
+          const raw = JSON.parse(fs.readFileSync("raw.json","utf8"));
+          const reels = (raw.data || [])
+            .filter(x => x.media_type === "VIDEO")
+            .slice(0,6)
+            .map(x => ({
+              caption: x.caption || "",
+              permalink: x.permalink,
+              thumbnail: x.thumbnail_url || x.media_url,
+              timestamp: x.timestamp
+            }));
+
+          fs.writeFileSync("data.json", JSON.stringify({ reels }, null, 2));
+          EOF
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data.json
+          git commit -m "Update Instagram feed" || echo "No changes"
+          git push
