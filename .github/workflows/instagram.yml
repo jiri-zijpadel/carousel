@@ -1,28 +1,38 @@
 name: Update Instagram Feed
 
-permissions:
-  contents: write
-  
 on:
   schedule:
-    - cron: "0 * * * *"   # každou hodinu
+    - cron: "0 * * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Fetch Instagram Data
         run: |
-          curl -s "https://graph.facebook.com/v25.0/17841477970120373/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${{ secrets.IG_TOKEN }}&limit=20" > raw.json
+          set -euo pipefail
+
+          curl -sS "https://graph.facebook.com/v25.0/17841477970120373/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${{ secrets.IG_TOKEN }}&limit=20" > raw.json
+
+          echo "RAW response:"
+          head -c 400 raw.json || true
+          echo
 
           node <<'EOF'
           const fs = require("fs");
-          const raw = JSON.parse(fs.readFileSync("raw.json","utf8"));
+          const rawText = fs.readFileSync("raw.json","utf8");
+          const raw = JSON.parse(rawText);
+
+          if (raw.error) {
+            console.error("Graph API error:", raw.error);
+            process.exit(1);
+          }
 
           const reels = (raw.data || [])
             .filter(x => x.media_type === "VIDEO")
@@ -35,12 +45,17 @@ jobs:
             }));
 
           fs.writeFileSync("data.json", JSON.stringify({ reels }, null, 2));
+          console.log("Wrote data.json with", reels.length, "items");
           EOF
+
+          ls -la
 
       - name: Commit changes
         run: |
+          set -e
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data.json
+          git status
           git commit -m "Update Instagram feed" || echo "No changes"
           git push
